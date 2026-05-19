@@ -64,9 +64,22 @@ export default function Home() {
             <p className="text-sm md:text-lg font-bold opacity-90 mb-8 max-w-2xl mx-auto">
               Has dado el primer paso para transformar la seguridad urbana en Apurímac.
             </p>
-            <div className="inline-flex items-center justify-center gap-2.5 bg-[#0D1F4D] text-white px-8 py-4 rounded-full font-bold text-sm shadow-xl cursor-default hover:bg-slate-900 transition-colors">
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
-              Validación en la Nube Activa
+            
+            {/* CONTENEDOR DE BOTONES MODIFICADO */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="inline-flex items-center justify-center gap-2.5 bg-[#0D1F4D] text-white px-8 py-4 rounded-full font-bold text-sm shadow-xl cursor-default hover:bg-slate-900 transition-colors">
+                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                Validación en la Nube Activa
+              </div>
+
+              {/* NUEVO BOTÓN SIMPLE PARA LA DEMO */}
+              <button 
+                onClick={() => navigate('/JUAN001')}
+                className="inline-flex items-center justify-center gap-2.5 bg-white text-[#0D1F4D] px-8 py-4 rounded-full font-black text-sm shadow-xl hover:bg-slate-100 transition-colors"
+              >
+                Volver al Perfil del Conductor
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
