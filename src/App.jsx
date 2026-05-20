@@ -19,13 +19,13 @@ export default function App() {
 
         {/* 3. Flujo Core Dinámico del Pasajero (Ecosistema QR) */}
         {/* Pantalla de lectura y perfil público del chofer */}
-        <Route path="/conductor/:codigoQR" element={<DriverProfile />} />
+        <Route path="/:codigoQR" element={<DriverProfile />} />
         
         {/* Formulario técnico de auditoría vial */}
-        <Route path="/conductor/:codigoQR/calificar" element={<RateTrip />} />
+        <Route path="/calificar/:codigoQR" element={<RateTrip />} />
         
         {/* Pantalla de éxito, control de racha y VialTickets */}
-        <Route path="/conductor/:codigoQR/exito" element={<ThankYou />} />
+        <Route path="/gracias" element={<ThankYou />} />
       </Routes>
     </BrowserRouter>
   );
