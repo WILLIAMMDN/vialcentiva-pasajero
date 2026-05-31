@@ -29,7 +29,7 @@ export function AboutSection({ mounted }) {
         <div className="space-y-6">
           <InfoCard 
             icon={<img 
-                    src="./public/UNAJMA.png" 
+                    src="unajma.png" 
                     alt="AAP" 
                     className="w-10 h-10 object-contain rounded-lg" 
                 />} 
@@ -38,7 +38,7 @@ export function AboutSection({ mounted }) {
           />
           <InfoCard 
             icon={<img 
-                    src="./public/AAP.png" 
+                    src="app.png" 
                     alt="AAP" 
                     className="w-10 h-10 object-contain rounded-lg" 
                 />} 
