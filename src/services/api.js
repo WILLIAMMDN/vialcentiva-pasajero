@@ -9,6 +9,9 @@ import { getDeviceId } from '../utils/device';
 /**
  * 1. OBTENER PERFIL DEL CONDUCTOR (Adaptado a tu BD real)
  */
+/**
+ * 1. OBTENER PERFIL DEL CONDUCTOR (Adaptado a tu BD real)
+ */
 export async function obtenerPerfilConductor(codigoQR) {
   try {
     // Buscamos en la tabla unidades y hacemos un JOIN automático con conductores
@@ -24,7 +27,8 @@ export async function obtenerPerfilConductor(codigoQR) {
           paradero,
           nivel_sello,
           promedio_estrellas,
-          total_viajes
+          total_viajes,
+          foto_url
         )
       `)
       .eq('qr_unico', codigoQR)
@@ -44,7 +48,8 @@ export async function obtenerPerfilConductor(codigoQR) {
       numero_unidad: data.numero_padron,
       promedio: data.conductores.promedio_estrellas,
       total_calificaciones: data.conductores.total_viajes,
-      nivel_sello: data.conductores.nivel_sello
+      nivel_sello: data.conductores.nivel_sello,
+      foto_url: data.conductores.foto_url 
     };
     
     return { exito: true, datos: perfil };
@@ -52,6 +57,7 @@ export async function obtenerPerfilConductor(codigoQR) {
     console.error("Error BD:", error.message);
     return { exito: false, error: error.message };
   }
+
 }
 
 /**

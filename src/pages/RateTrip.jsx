@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerPerfilConductor, guardarCalificacion } from '../services/api';
+import { ChevronLeft, ChevronRight, Star, ShieldCheck, CheckCircle2, ThumbsUp, ThumbsDown, Ticket } from 'lucide-react';
 
 export default function RateTrip() {
   const { codigoQR } = useParams();
@@ -10,6 +11,9 @@ export default function RateTrip() {
   const [cargando, setCargando] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState(null);
+
+  // Estado para capturar si la imagen falla al cargar
+  const [imgError, setImgError] = useState(false);
 
   const [respuestas, setRespuestas] = useState({
     velocidad: null,
@@ -24,8 +28,9 @@ export default function RateTrip() {
   useEffect(() => {
     async function cargarConductor() {
       const respuesta = await obtenerPerfilConductor(codigoQR);
-      if (respuesta.exito) {
+      if (respuesta.exito && respuesta.datos) {
         setConductor(respuesta.datos);
+        setImgError(false);
       } else {
         setError(respuesta.error);
       }
@@ -59,7 +64,7 @@ export default function RateTrip() {
 
     if (respuestas.velocidad === null || respuestas.celular === null ||
         respuestas.trato === null || respuestas.paradero === null || respuestas.limpieza === null) {
-      alert("Por favor, responde todos los criterios antes de enviar.");
+      alert("Por favor, responde todos los criterios antes de enviar la auditoría.");
       return;
     }
 
@@ -79,26 +84,41 @@ export default function RateTrip() {
     }
   };
 
+  // ==========================================
+  // PANTALLA DE CARGA 
+  // ==========================================
   if (cargando) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center font-sans">
-        <div className="w-10 h-10 border-4 border-slate-200 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
-        <div className="text-slate-400 font-bold uppercase tracking-widest text-xs">Preparando auditoría</div>
-      </div>
-    );
-  }
-
-  if (error || !conductor) {
-    return (
-      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-6 font-sans">
-        <div className="bg-white p-8 rounded-[2rem] shadow-xl text-center w-full max-w-sm">
-          <svg className="w-12 h-12 text-rose-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <p className="text-slate-900 font-black text-lg mb-6">Error al conectar con la unidad</p>
-          <button onClick={() => navigate('/')} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold">Volver al inicio</button>
+      <div className="min-h-screen bg-[#00B5E2] flex items-center justify-center font-sans">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+          <div className="text-white font-black uppercase tracking-widest text-sm">Preparando auditoría...</div>
         </div>
       </div>
     );
   }
+
+  // ==========================================
+  // PANTALLA DE ERROR
+  // ==========================================
+  if (error || !conductor) {
+    return (
+      <div className="min-h-screen bg-[#F4F5F7] flex items-center justify-center p-6 font-sans">
+        <div className="bg-white p-8 rounded-3xl shadow-xl text-center w-full max-w-sm border border-gray-100">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+             <span className="text-red-500 font-black text-2xl">X</span>
+          </div>
+          <p className="text-[#031549] font-black text-xl mb-6">Error al conectar con la unidad</p>
+          <button onClick={() => navigate('/')} className="w-full py-4 bg-[#031549] text-white font-black hover:bg-black transition-colors rounded-xl">
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const nombreMostrar = conductor?.nombre_abreviado || conductor?.nombre_publico || 'Conductor';
+  const iniciales = nombreMostrar.substring(0, 2).toUpperCase();
 
   const criterios = [
     { 
@@ -124,177 +144,193 @@ export default function RateTrip() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex justify-center font-sans pb-[100px] sm:pb-8">
+    <div className="min-h-screen bg-[#F4F5F7] flex flex-col font-sans pb-[100px]">
       
-      <div className="w-full max-w-md bg-[#f8fafc] sm:my-8 sm:rounded-[2.5rem] sm:shadow-2xl sm:overflow-hidden relative flex flex-col">
+      {/* 1. HEADER (Limpio y Blanco) */}
+      <header className="bg-white flex items-center justify-between px-6 h-[80px] sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <button 
+          onClick={() => navigate(-1)} 
+          className="p-2 -ml-2 text-[#031549] hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <ChevronLeft strokeWidth={3} className="w-7 h-7" />
+        </button>
+        <div className="flex items-center gap-2">
+          <img src="/logo_vialcentiva.png" alt="VialCentiva" className="h-8 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+          <span className="font-black text-[#031549] text-xl tracking-tighter">VialCentiva</span>
+        </div>
+        <div className="w-7 h-7"></div> 
+      </header>
 
-        {/* CABECERA CORPORATIVA ASIMÉTRICA */}
-        <div className="bg-slate-900 rounded-bl-[3rem] px-6 pt-8 pb-14 text-white relative z-0 shadow-lg">
-          <div className="flex items-center gap-4 mb-6">
-            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-colors shrink-0">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
-            </button>
-            <div className="flex items-center gap-2.5">
-    <div className="bg-white h-7 w-7 rounded-lg p-1 flex items-center justify-center shadow-md shrink-0 border border-slate-100">
-      <img src="/logo_vialcentiva.png" alt="Logo" className="max-h-full max-w-full object-contain" />
-    </div>
-    <div className="flex items-center tracking-tight text-base">
-      <span className="font-black text-white">Vial</span>
-      <span className="font-black text-emerald-400">Centiva</span>
-    </div>
-  </div>
+      {/* 2. HERO DE EVALUACIÓN CON FOTO FLOTANTE */}
+      <div className="bg-[#00B5E2] pt-8 pb-24 px-6 text-center relative z-0">
+        <div className="inline-block bg-[#FFD500] px-4 py-1.5 shadow-sm mb-3">
+          <p className="text-[#031549] text-xs font-black tracking-widest uppercase">
+            EVALUACIÓN EN CURSO
+          </p>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
+          Calificando a <br/> {nombreMostrar}
+        </h1>
+      </div>
+
+      {/* 3. CONTENEDOR PRINCIPAL DEL FORMULARIO */}
+      <form onSubmit={handleSubmit} className="px-5 sm:px-8 relative z-20 flex flex-col gap-5 -mt-14">
+        
+        {/* FOTO FLOTANTE DEL CONDUCTOR (Idéntica a DriverProfile) */}
+        <div className="relative mx-auto -mt-10 mb-2">
+          <div className="w-32 h-32 bg-white rounded-full p-1.5 shadow-2xl relative z-10 mx-auto">
+            <div className="w-full h-full bg-[#F4F5F7] rounded-full overflow-hidden flex items-center justify-center border border-gray-100">
+              {conductor?.foto_url && !imgError ? (
+                <img 
+                  src={conductor.foto_url} 
+                  alt="Perfil" 
+                  className="w-full h-full object-cover" 
+                  onError={() => setImgError(true)} 
+                />
+              ) : (
+                <span className="text-5xl font-black text-[#031549] tracking-tighter">
+                  {iniciales}
+                </span>
+              )}
+            </div>
           </div>
-          
-          <div className="flex items-center gap-5">
-            <div className="w-16 h-16 bg-white rounded-[1.2rem] flex items-center justify-center shadow-inner shrink-0 transform -rotate-3">
-              <span className="text-2xl font-black text-slate-900 transform rotate-3">
-                {conductor.nombre_publico.substring(0, 2).toUpperCase()}
-              </span>
-            </div>
-            <div>
-              <p className="text-slate-400 text-[10px] uppercase tracking-widest font-black mb-1">Evaluando a</p>
-              <h1 className="text-2xl font-black leading-tight text-white mb-1">{conductor.nombre_publico}</h1>
-            </div>
+          <div className="absolute bottom-0 right-2 bg-[#00B5E2] border-4 border-white rounded-full shadow-lg z-20 flex items-center justify-center">
+            <CheckCircle2 className="w-6 h-6 text-white fill-[#031549]" strokeWidth={1.5} />
           </div>
         </div>
 
-        {/* CUERPO DEL FORMULARIO */}
-        <form onSubmit={handleSubmit} className="px-5 -mt-8 relative z-10 flex flex-col gap-5 pb-32">
-          
-          {/* NUEVO: AVISO DE EMPODERAMIENTO CIUDADANO (Trust Banner) */}
-          <div className="bg-indigo-50/90 border border-indigo-100 rounded-2xl p-4 flex gap-4 items-center shadow-sm relative overflow-hidden backdrop-blur-sm">
-            <div className="absolute -right-4 -top-4 w-16 h-16 bg-indigo-400/10 rounded-full blur-xl"></div>
-            <div className="w-10 h-10 bg-white text-indigo-600 rounded-xl flex items-center justify-center shrink-0 border border-indigo-100 shadow-sm">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            </div>
-            <div className="relative z-10">
-              <h4 className="text-[13px] font-black text-indigo-950 mb-0.5 tracking-wide leading-tight">Evalúa con total libertad</h4>
-              <p className="text-[11px] text-indigo-800/80 font-medium leading-relaxed">
-                No permitas que el conductor influya en tu calificación. Tu opinión honesta y privada garantiza el bienestar de todos.
-              </p>
-            </div>
+        {/* TRUST BANNER (Estilo Premium) */}
+        <div className="bg-blue-50/80 border border-blue-100 rounded-2xl p-4 flex gap-4 items-center shadow-sm relative overflow-hidden">
+          <div className="w-10 h-10 bg-white text-[#00B5E2] rounded-xl flex items-center justify-center shrink-0 border border-blue-50 shadow-sm">
+             <ShieldCheck className="w-6 h-6" strokeWidth={2.5} />
           </div>
-
-          {/* BOTÓN MAESTRO PREMIUM */}
-          <button
-            type="button"
-            onClick={marcarTodoExcelente}
-            className="w-full relative overflow-hidden bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-5 shadow-lg shadow-orange-500/20 flex items-center gap-4 group transition-transform active:scale-95 border border-white/20 mt-1"
-          >
-            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm shrink-0">
-              <svg className="w-7 h-7 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd"></path></svg>
-            </div>
-            <div className="text-left">
-              <span className="block text-white font-black text-[17px] tracking-wide leading-tight drop-shadow-sm">
-                ¡Viaje de 5 estrellas!
-              </span>
-              <span className="block text-white/80 text-[11px] font-bold uppercase tracking-wider mt-0.5">
-                Marcar todo como excelente
-              </span>
-            </div>
-          </button>
-
-          <div className="flex items-center gap-3 my-1">
-            <div className="flex-1 h-px bg-slate-200"></div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Evaluación Detallada</span>
-            <div className="flex-1 h-px bg-slate-200"></div>
+          <div className="relative z-10">
+            <h4 className="text-[13px] font-black text-[#031549] mb-0.5 tracking-tight">Evaluación 100% Privada</h4>
+            <p className="text-[11px] text-[#031549]/70 font-bold leading-relaxed">
+              El conductor no sabrá quién lo calificó. Tu honestidad garantiza un mejor transporte. No dejes que el conductor influya en tu evaluación, ¡califica con total sinceridad!
+            </p>
           </div>
+        </div>
 
-          {/* CRITERIOS: Smart Cards Estilo iOS */}
-          <div className="flex flex-col gap-4">
-            {criterios.map((c) => (
-              <div key={c.id} className="bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex flex-col gap-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 shrink-0 border border-slate-100">
-                    {c.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-[15px] font-black text-slate-800 leading-none mb-1">{c.label}</h4>
-                    <p className="text-[12px] text-slate-500 font-medium leading-tight">{c.desc}</p>
-                  </div>
+        {/* BOTÓN RÁPIDO: TODO EXCELENTE */}
+        <button
+          type="button"
+          onClick={marcarTodoExcelente}
+          className="w-full bg-[#FFD500] hover:bg-[#e6c000] border-2 border-[#FFD500] rounded-2xl p-5 shadow-[0_8px_20px_rgba(255,213,0,0.25)] flex items-center gap-4 transition-transform active:scale-95 group mt-2"
+        >
+          <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center shrink-0">
+            <Star className="w-7 h-7 text-[#031549] fill-[#031549]" />
+          </div>
+          <div className="text-left">
+            <span className="block text-[#031549] font-black text-[17px] tracking-wide leading-tight">
+              ¡Viaje de 5 estrellas!
+            </span>
+            <span className="block text-[#031549]/80 text-[11px] font-black uppercase tracking-widest mt-1">
+              Marcar todo como excelente
+            </span>
+          </div>
+        </button>
+
+        <div className="flex items-center gap-3 my-2">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Evaluación Detallada</span>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+
+        {/* CRITERIOS: Tarjetas Limpias y Botones Rediseñados */}
+        <div className="flex flex-col gap-4">
+          {criterios.map((c) => (
+            <div key={c.id} className="bg-white p-5 rounded-[1.5rem] shadow-[0_4px_15px_rgba(0,0,0,0.02)] border border-gray-100 flex flex-col gap-4">
+              
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-[#031549] shrink-0 border border-gray-100">
+                  {c.icon}
                 </div>
-                
-                {/* Controles Segmentados (Unified Switch) */}
-                <div className="flex gap-2 bg-slate-100 p-1.5 rounded-2xl">
-                  <button
-                    type="button"
-                    onClick={() => handleToggle(c.id, true)}
-                    className={`flex-1 py-3 rounded-xl text-[13px] font-black transition-all duration-300 ${
-                      respuestas[c.id] === true 
-                      ? 'bg-emerald-500 text-white shadow-md' 
-                      : 'text-slate-500 hover:bg-white/60'
-                    }`}
-                  >
-                    Sí cumple
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleToggle(c.id, false)}
-                    className={`flex-1 py-3 rounded-xl text-[13px] font-black transition-all duration-300 ${
-                      respuestas[c.id] === false 
-                      ? 'bg-rose-500 text-white shadow-md' 
-                      : 'text-slate-500 hover:bg-white/60'
-                    }`}
-                  >
-                    No cumple
-                  </button>
+                <div>
+                  <h4 className="text-[15px] font-black text-[#031549] leading-none mb-1.5">{c.label}</h4>
+                  <p className="text-[12px] text-gray-500 font-bold leading-tight">{c.desc}</p>
                 </div>
               </div>
-            ))}
-          </div>
+              
+              {/* Controles Rediseñados (Mucho más intuitivos y premium) */}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={() => handleToggle(c.id, true)}
+                  className={`flex-1 py-3.5 rounded-xl text-[14px] font-black flex items-center justify-center gap-2 transition-all duration-300 ${
+                    respuestas[c.id] === true 
+                    ? 'bg-[#00B5E2] text-white shadow-[0_4px_15px_rgba(0,181,226,0.35)] ring-2 ring-[#00B5E2] ring-offset-2' 
+                    : 'bg-[#F4F5F7] text-gray-400 hover:bg-gray-200 border border-transparent'
+                  }`}
+                >
+                  <ThumbsUp className="w-4 h-4" strokeWidth={3} /> SÍ
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggle(c.id, false)}
+                  className={`flex-1 py-3.5 rounded-xl text-[14px] font-black flex items-center justify-center gap-2 transition-all duration-300 ${
+                    respuestas[c.id] === false 
+                    ? 'bg-rose-500 text-white shadow-[0_4px_15px_rgba(244,63,94,0.35)] ring-2 ring-rose-500 ring-offset-2' 
+                    : 'bg-[#F4F5F7] text-gray-400 hover:bg-gray-200 border border-transparent'
+                  }`}
+                >
+                  <ThumbsDown className="w-4 h-4" strokeWidth={3} /> NO
+                </button>
+              </div>
 
-          {/* Tarjeta de Sorteo / Fidelización (Oscura y Premium) */}
-          <div className="bg-slate-900 rounded-[1.5rem] p-6 relative overflow-hidden shadow-xl shadow-slate-900/10 mt-2 mb-6">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-               <svg className="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
             </div>
-            <div className="relative z-10">
-              <h4 className="text-[14px] font-black text-white mb-2 flex items-center gap-2">
-                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
-                Acumula VialTickets
-              </h4>
-              <p className="text-[12px] text-slate-400 mb-4 font-medium leading-relaxed">
-                Ingresa tu número (opcional) para participar en sorteos y descuentos en la asociación.
-              </p>
-              <input
-                type="tel"
-                placeholder="Ingresa tu celular"
-                value={respuestas.celularPasajero || ''}
-                onChange={(e) => {
-                  setRespuestas({ ...respuestas, celularPasajero: e.target.value || null });
-                  setErrorCelular(null);
-                }}
-                className={`w-full px-5 py-3.5 rounded-xl border-2 text-[14px] font-bold bg-white/5 text-white placeholder-slate-500 focus:outline-none transition-all ${
-                  errorCelular ? 'border-rose-500 focus:bg-rose-500/10' : 'border-slate-700 focus:border-emerald-400 focus:bg-white/10'
-                }`}
-              />
-              {errorCelular && <p className="text-[11px] text-rose-400 mt-2 font-bold">{errorCelular}</p>}
-            </div>
-          </div>
-          
-        </form>
-
-        {/* FLOATING ACTION BAR (Sticky Footer estilo App Nativa) */}
-        <div className="fixed sm:absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-4 px-5 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.03)] flex justify-center">
-          <div className="w-full max-w-md">
-            <button
-              onClick={handleSubmit}
-              disabled={enviando}
-              className={`w-full text-white text-[16px] font-black py-4 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-2 ${
-                enviando 
-                ? 'bg-slate-300 cursor-not-allowed' 
-                : 'bg-slate-900 hover:bg-slate-800 active:scale-95 shadow-slate-900/20'
-              }`}
-            >
-              {enviando ? 'Procesando auditoría...' : 'Enviar calificación'}
-              {!enviando && (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-              )}
-            </button>
-          </div>
+          ))}
         </div>
 
+        {/* TARJETA FIDELIZACIÓN / SORTEOS (Look Corporativo) */}
+        <div className="bg-[#031549] rounded-[1.5rem] p-6 relative overflow-hidden shadow-xl mt-4 mb-8">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <Ticket className="w-24 h-24 text-white" />
+          </div>
+          <div className="relative z-10">
+            <h4 className="text-[14px] font-black text-white mb-2 flex items-center gap-2">
+              <Star className="w-5 h-5 text-[#FFD500] fill-[#FFD500]" />
+              Acumula VialTickets
+            </h4>
+            <p className="text-[12px] text-blue-100/80 mb-5 font-bold leading-relaxed pr-6">
+              Ingresa tu celular (opcional) para participar en sorteos y obtener descuentos en los negocios de la ciudad.
+            </p>
+            <input
+              type="tel"
+              placeholder="Ingresa tu celular"
+              value={respuestas.celularPasajero || ''}
+              onChange={(e) => {
+                setRespuestas({ ...respuestas, celularPasajero: e.target.value || null });
+                setErrorCelular(null);
+              }}
+              className={`w-full px-5 py-4 rounded-xl border-2 text-[14px] font-black bg-white/10 text-white placeholder-blue-200/50 outline-none transition-all ${
+                errorCelular ? 'border-rose-500 focus:bg-rose-500/10' : 'border-blue-800 focus:border-[#00B5E2] focus:bg-white/20'
+              }`}
+            />
+            {errorCelular && <p className="text-[11px] text-rose-400 mt-2 font-black">{errorCelular}</p>}
+          </div>
+        </div>
+        
+      </form>
+
+      {/* 4. FLOATING ACTION BAR (Botón Inferior) */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 px-5 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] flex justify-center">
+        <div className="w-full max-w-md">
+          <button
+            onClick={handleSubmit}
+            disabled={enviando}
+            className={`w-full text-white text-[16px] font-black py-4 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-2 ${
+              enviando 
+              ? 'bg-gray-300 cursor-not-allowed text-gray-500' 
+              : 'bg-[#031549] hover:bg-black active:scale-95 shadow-[#031549]/20'
+            }`}
+          >
+            {enviando ? 'Enviando auditoría...' : 'Finalizar y Calificar'}
+            {!enviando && <ChevronRight className="w-5 h-5" strokeWidth={3} />}
+          </button>
+        </div>
       </div>
+
     </div>
   );
 }
