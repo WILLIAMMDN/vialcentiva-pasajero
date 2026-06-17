@@ -1,6 +1,10 @@
 # VialCentiva Pasajero
 
 <p align="center">
+  <img src="docs/assets/brand/logo-vialcentiva.jpg" alt="Logo oficial VialCentiva" width="360" />
+</p>
+
+<p align="center">
   <img src=".github/readme/hero-vialcentiva.svg" alt="VialCentiva Pasajero - sistema de reputacion e incentivos para mototaxis" width="100%" />
 </p>
 
@@ -14,6 +18,17 @@
 VialCentiva Pasajero es la experiencia web publica del ecosistema VialCentiva: permite que una persona escanee el QR de una mototaxi, revise el perfil publico del conductor y registre una evaluacion privada basada en conductas observables del viaje. La aplicacion no busca reemplazar a una autoridad de transito; crea una capa de reputacion ciudadana, datos operativos e incentivos locales para que conducir bien deje de ser invisible.
 
 El proyecto forma parte de una propuesta de validacion para transporte local, cultura vial y movilidad preventiva. En el PMV actual se integran QR por unidad, perfil publico, formulario de auditoria, control por dispositivo, ranking, VialTickets, beneficios y evidencias de activacion en campo.
+
+## Estado Online
+
+El sistema esta pensado para ejecutarse como producto online: el pasajero entra desde un QR impreso, el frontend consulta Supabase en la nube y la informacion queda asociada a la unidad y al conductor. La URL publica del modulo pasajero se configura en el proveedor de despliegue y tambien se usa desde el modulo conductor mediante `VITE_APP_PASAJERO_URL`.
+
+La base de datos utilizada es Supabase. El repositorio no publica credenciales reales; documenta el contrato tecnico necesario para conectar una copia o auditar la implementacion:
+
+- `VITE_SUPABASE_URL`: URL del proyecto Supabase.
+- `VITE_SUPABASE_ANON_KEY`: clave anonima publica, protegida por politicas RLS.
+- Tablas, vistas y RPC esperadas: ver [`docs/base-datos-supabase.md`](docs/base-datos-supabase.md).
+- Ejemplo seguro de variables: ver [`.env.example`](.env.example).
 
 ## Evidencia Visual
 
@@ -159,6 +174,8 @@ No subas credenciales privadas al repositorio. La clave anonima debe trabajar ju
 | Documento | Contenido |
 | --- | --- |
 | [`docs/arquitectura-pasajero.md`](docs/arquitectura-pasajero.md) | Flujo tecnico, rutas, datos, scoring y operacion local |
+| [`docs/base-datos-supabase.md`](docs/base-datos-supabase.md) | Contrato de Supabase: variables, tablas, campos, vistas y RPC |
+| [`docs/despliegue-online.md`](docs/despliegue-online.md) | Guia para entender despliegue online y variables en produccion |
 | [`docs/validacion-campo.md`](docs/validacion-campo.md) | Evidencia de campo, lectura academica y proximas mediciones |
 | [`docs/reference/VialCentiva_Documentacion_Validacion_Final_Local.docx`](docs/reference/VialCentiva_Documentacion_Validacion_Final_Local.docx) | Informe tecnico editable usado como base de validacion |
 | [`docs/github-presentation/index.html`](docs/github-presentation/index.html) | Presentacion HTML del proyecto |
