@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo del producto</title>
+  <desc id="desc">Secuencia QR, perfil, evaluación, base de datos, racha y beneficios.</desc>
+  <rect width="1200" height="420" rx="8" fill="#031549"/>
+  <text x="64" y="62" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="900" fill="#FFFFFF">Flujo de confianza</text>
+  <text x="64" y="98" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#A7F3FF">La evaluación no termina en un formulario: alimenta reputación, datos y beneficios.</text>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="900">
+    <g transform="translate(66 158)">
+      <rect width="148" height="142" rx="8" fill="#FFFFFF"/>
+      <rect x="26" y="22" width="96" height="96" rx="8" fill="#F8FAFC"/>
+      <rect x="42" y="38" width="22" height="22" fill="#031549"/>
+      <rect x="86" y="38" width="22" height="22" fill="#031549"/>
+      <rect x="42" y="82" width="22" height="22" fill="#031549"/>
+      <rect x="78" y="76" width="12" height="12" fill="#00B5E2"/>
+      <text x="74" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Escanear QR</text>
+    </g>
+
+    <g transform="translate(267 158)">
+      <rect width="148" height="142" rx="8" fill="#00B5E2"/>
+      <circle cx="74" cy="56" r="34" fill="#FFFFFF"/>
+      <text x="74" y="68" text-anchor="middle" font-size="25" fill="#031549">VC</text>
+      <rect x="34" y="104" width="80" height="16" rx="8" fill="#FFD500"/>
+      <text x="74" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Ver perfil</text>
+    </g>
+
+    <g transform="translate(468 158)">
+      <rect width="148" height="142" rx="8" fill="#FFFFFF"/>
+      <rect x="30" y="28" width="88" height="16" rx="8" fill="#031549"/>
+      <rect x="30" y="62" width="88" height="16" rx="8" fill="#00B5E2"/>
+      <rect x="30" y="96" width="88" height="16" rx="8" fill="#FFD500"/>
+      <text x="74" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Calificar</text>
+    </g>
+
+    <g transform="translate(669 158)">
+      <rect width="148" height="142" rx="8" fill="#00B5E2"/>
+      <path d="M46 44 C46 28 102 28 102 44 V100 C102 116 46 116 46 100 Z" fill="#FFFFFF"/>
+      <path d="M46 44 C46 60 102 60 102 44" fill="none" stroke="#031549" stroke-width="7"/>
+      <path d="M46 72 C46 88 102 88 102 72" fill="none" stroke="#031549" stroke-width="7" opacity="0.7"/>
+      <text x="74" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Guardar</text>
+    </g>
+
+    <g transform="translate(870 158)">
+      <rect width="148" height="142" rx="8" fill="#FFFFFF"/>
+      <path d="M39 70 L65 96 L111 45" fill="none" stroke="#00B5E2" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="74" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Racha</text>
+    </g>
+
+    <g transform="translate(1071 158)">
+      <rect width="64" height="142" rx="8" fill="#FFD500"/>
+      <path d="M20 46 H44 V100 H20 Z" fill="#031549"/>
+      <path d="M18 62 H46" stroke="#FFD500" stroke-width="8"/>
+      <text x="32" y="176" text-anchor="middle" font-size="19" fill="#FFFFFF">Tickets</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#FFD500" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 15">
+    <path d="M226 228 H254"/>
+    <path d="M427 228 H455"/>
+    <path d="M628 228 H656"/>
+    <path d="M829 228 H857"/>
+    <path d="M1030 228 H1058"/>
+    <animate attributeName="stroke-dashoffset" values="0;-50" dur="1.8s" repeatCount="indefinite"/>
+  </g>
+</svg>

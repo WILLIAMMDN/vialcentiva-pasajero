@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VialCentiva Pasajero - Presentación GitHub</title>
+  <style>
+    :root {
+      --navy: #031549;
+      --cyan: #00b5e2;
+      --yellow: #ffd500;
+      --green: #20c997;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --paper: #f8fafc;
+      --line: #dbe6ef;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow: hidden;
+      letter-spacing: 0;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 72px 1fr 76px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 950;
+      color: var(--navy);
+    }
+
+    .brand img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .chapter {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .viewport {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr);
+      gap: 40px;
+      align-items: center;
+      padding: 48px 64px;
+      opacity: 0;
+      transform: translateX(50px);
+      pointer-events: none;
+      transition: opacity 420ms ease, transform 420ms ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .slide[data-theme="navy"] {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .slide[data-theme="cyan"] {
+      background: var(--cyan);
+      color: var(--navy);
+    }
+
+    .slide[data-theme="paper"] {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: max-content;
+      max-width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--yellow);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 18px 0;
+      color: inherit;
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: clamp(46px, 7vw, 94px);
+      max-width: 850px;
+    }
+
+    h2 {
+      font-size: clamp(38px, 5vw, 68px);
+    }
+
+    p {
+      margin: 0;
+      color: inherit;
+      font-size: clamp(17px, 1.8vw, 22px);
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .muted {
+      color: #475569;
+    }
+
+    .slide[data-theme="navy"] .muted {
+      color: #cbd5e1;
+    }
+
+    .hero-art,
+    .image-panel {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(3, 21, 73, 0.12);
+      background: var(--white);
+      box-shadow: 0 22px 50px rgba(3, 21, 73, 0.16);
+    }
+
+    .hero-art img,
+    .image-panel img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tile {
+      min-height: 128px;
+      padding: 20px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .slide[data-theme="navy"] .tile {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tile strong {
+      color: inherit;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .tile span {
+      color: inherit;
+      opacity: 0.76;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .badge {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--cyan);
+      color: var(--navy);
+      font-weight: 950;
+    }
+
+    .flow-step h3 {
+      margin: 0 0 3px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .flow-step small {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .metric {
+      padding: 24px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .metric b {
+      display: block;
+      color: var(--navy);
+      font-size: 44px;
+      line-height: 1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .footerbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 32px;
+      background: var(--white);
+      border-top: 1px solid var(--line);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .control {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--navy);
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .control:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .progress {
+      flex: 1;
+      height: 10px;
+      border-radius: 8px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--cyan);
+      transition: width 300ms ease;
+    }
+
+    .count {
+      min-width: 72px;
+      text-align: right;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .pulse-line {
+      height: 12px;
+      width: 100%;
+      border-radius: 8px;
+      background: repeating-linear-gradient(90deg, var(--cyan) 0 28px, transparent 28px 48px);
+      animation: moveLine 1.3s linear infinite;
+      border: 1px solid rgba(3, 21, 73, 0.12);
+    }
+
+    @keyframes moveLine {
+      from { background-position: 0 0; }
+      to { background-position: 48px 0; }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        min-height: 100vh;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      .topbar,
+      .footerbar {
+        padding: 16px;
+      }
+
+      .viewport {
+        min-height: 860px;
+      }
+
+      .slide {
+        grid-template-columns: 1fr;
+        align-content: start;
+        gap: 24px;
+        padding: 32px 20px;
+      }
+
+      .grid.cols-2,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <header class="topbar">
+      <div class="brand">
+        <img src="../../public/logo_vialcentiva.png" alt="VialCentiva" />
+        <span>VialCentiva Pasajero</span>
+      </div>
+      <div class="chapter" id="chapter">Presentación GitHub</div>
+    </header>
+
+    <section class="viewport" aria-live="polite">
+      <article class="slide active" data-theme="paper" data-title="Portada">
+        <div>
+          <span class="eyebrow">Repositorio profesional</span>
+          <h1>Auditoría ciudadana para transporte local.</h1>
+          <p class="muted">Una experiencia QR que convierte cada viaje en reputación, datos y beneficios para una movilidad más transparente.</p>
+        </div>
+        <div class="hero-art">
+          <img src="../../.github/readme/hero-vialcentiva.svg" alt="Hero de VialCentiva" />
+        </div>
+      </article>
+
+      <article class="slide" data-theme="navy" data-title="Problema">
+        <div>
+          <span class="eyebrow">Contexto</span>
+          <h2>El pasajero observa mucho, pero la ciudad registra poco.</h2>
+          <p class="muted">La calidad del servicio, el respeto al paradero, el trato y la seguridad suelen quedar como experiencias aisladas. VialCentiva les da estructura, privacidad y valor comunitario.</p>
+        </div>
+        <div class="grid cols-2">
+          <div class="tile"><strong>Fricción baja</strong><span>El flujo nace desde un QR y se resuelve en segundos.</span></div>
+          <div class="tile"><strong>Privacidad</strong><span>La evaluación no expone la identidad del pasajero al conductor.</span></div>
+          <div class="tile"><strong>Transparencia</strong><span>Los promedios y rankings visibilizan buenas prácticas.</span></div>
+          <div class="tile"><strong>Incentivos</strong><span>La participación se conecta con VialTickets y aliados locales.</span></div>
+        </div>
+      </article>
+
+      <article class="slide" data-theme="paper" data-title="Producto">
+        <div>
+          <span class="eyebrow">Experiencia</span>
+          <h2>Mobile-first, rápida y visualmente memorable.</h2>
+          <p class="muted">La app está pensada para el momento real del viaje: pantallas grandes, decisiones claras, contraste fuerte y rutas directas.</p>
+        </div>
+        <div class="image-panel">
+          <img src="../../.github/readme/mobile-showcase.svg" alt="Pantallas principales" />
+        </div>
+      </article>
+
+      <article class="slide" data-theme="cyan" data-title="Flujo">
+        <div>
+          <span class="eyebrow">Sistema QR</span>
+          <h2>Del escaneo a la recompensa.</h2>
+          <p>El recorrido conecta unidad, conductor, evaluación, guardado de datos, racha y beneficios sin romper el contexto del pasajero.</p>
+        </div>
+        <div class="flow">
+          <div class="flow-step"><div class="badge">1</div><div><h3>QR de unidad</h3><small>Abre `/:codigoQR` y consulta Supabase.</small></div></div>
+          <div class="flow-step"><div class="badge">2</div><div><h3>Perfil público</h3><small>Muestra conductor, unidad, sello, viajes y promedio.</small></div></div>
+          <div class="flow-step"><div class="badge">3</div><div><h3>Auditoría</h3><small>Registra criterios de seguridad, trato y limpieza.</small></div></div>
+          <div class="flow-step"><div class="badge">4</div><div><h3>VialTickets</h3><small>Calcula días únicos y activa participación.</small></div></div>
+        </div>
+      </article>
+
+      <article class="slide" data-theme="paper" data-title="Arquitectura">
+        <div>
+          <span class="eyebrow">Ingeniería</span>
+          <h2>React ordena la experiencia. Supabase sostiene los datos.</h2>
+          <p class="muted">La lógica principal vive en `src/services/api.js`: obtiene perfiles, guarda calificaciones y calcula rachas por `fecha_hora`.</p>
+        </div>
+        <div class="image-panel">
+          <img src="../../.github/readme/architecture-map.svg" alt="Arquitectura del sistema" />
+        </div>
+      </article>
+
+      <article class="slide" data-theme="navy" data-title="Impacto">
+        <div>
+          <span class="eyebrow">Medición</span>
+          <h2>La comunidad puede ver cómo evoluciona el servicio.</h2>
+          <p class="muted">La portada reúne visitas, viajes auditados, conductores activos, ranking y beneficios. Es una vitrina viva del proyecto.</p>
+        </div>
+        <div>
+          <div class="metrics">
+            <div class="metric"><b>QR</b><span>Entrada universal</span></div>
+            <div class="metric"><b>5</b><span>Criterios de auditoría</span></div>
+            <div class="metric"><b>2</b><span>Días para activar racha</span></div>
+          </div>
+          <div style="height: 24px"></div>
+          <div class="pulse-line" aria-hidden="true"></div>
+        </div>
+      </article>
+
+      <article class="slide" data-theme="paper" data-title="Roadmap">
+        <div>
+          <span class="eyebrow">Siguiente etapa</span>
+          <h2>De app pasajera a ecosistema vial.</h2>
+          <p class="muted">El repositorio ya puede presentarse profesionalmente en GitHub y quedar preparado para paneles, reportes, analítica y aliados.</p>
+        </div>
+        <div class="grid">
+          <div class="tile"><strong>Panel administrativo</strong><span>Asociaciones, conductores, unidades, beneficios y reportes.</span></div>
+          <div class="tile"><strong>Analítica territorial</strong><span>Rutas, horarios, zonas, evolución de indicadores y alertas.</span></div>
+          <div class="tile"><strong>Seguridad y calidad</strong><span>RLS, pruebas E2E, auditoría de reglas y monitoreo.</span></div>
+          <div class="tile"><strong>GitHub listo</strong><span>README visual, assets animados y pitch HTML incluidos.</span></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footerbar">
+      <div class="controls">
+        <button class="control" type="button" aria-label="Slide anterior" id="prev">‹</button>
+        <button class="control" type="button" aria-label="Siguiente slide" id="next">›</button>
+      </div>
+      <div class="progress" aria-label="Progreso de presentación"><span id="progress"></span></div>
+      <div class="count" id="count">1 / 7</div>
+    </footer>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.querySelector("#progress");
+    const count = document.querySelector("#count");
+    const chapter = document.querySelector("#chapter");
+    let index = 0;
+
+    function showSlide(nextIndex) {
+      index = (nextIndex + slides.length) % slides.length;
+      slides.forEach((slide, current) => {
+        slide.classList.toggle("active", current === index);
+      });
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      count.textContent = `${index + 1} / ${slides.length}`;
+      chapter.textContent = slides[index].dataset.title;
+    }
+
+    document.querySelector("#prev").addEventListener("click", () => showSlide(index - 1));
+    document.querySelector("#next").addEventListener("click", () => showSlide(index + 1));
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " ") showSlide(index + 1);
+      if (event.key === "ArrowLeft") showSlide(index - 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

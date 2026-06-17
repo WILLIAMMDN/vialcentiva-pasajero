@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura de VialCentiva Pasajero</title>
+  <desc id="desc">Mapa de capas entre React, servicios, Supabase, tablas y experiencia del pasajero.</desc>
+  <rect width="1200" height="620" rx="8" fill="#F8FAFC"/>
+  <text x="64" y="62" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="900" fill="#031549">Arquitectura del sistema</text>
+  <text x="64" y="98" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#475569">Capas claras: experiencia React, servicios de dominio y datos Supabase.</text>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <rect x="64" y="150" width="292" height="340" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="92" y="194" font-size="21" font-weight="900" fill="#031549">Frontend React</text>
+    <rect x="92" y="226" width="236" height="46" rx="8" fill="#00B5E2"/>
+    <text x="210" y="255" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">Home y ranking</text>
+    <rect x="92" y="288" width="236" height="46" rx="8" fill="#F4F5F7"/>
+    <text x="210" y="317" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">Perfil por QR</text>
+    <rect x="92" y="350" width="236" height="46" rx="8" fill="#FFD500"/>
+    <text x="210" y="379" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">Auditoría del viaje</text>
+    <rect x="92" y="412" width="236" height="46" rx="8" fill="#031549"/>
+    <text x="210" y="441" text-anchor="middle" font-size="15" font-weight="900" fill="#FFFFFF">Gracias y VialTickets</text>
+
+    <rect x="454" y="150" width="292" height="340" rx="8" fill="#031549"/>
+    <text x="482" y="194" font-size="21" font-weight="900" fill="#FFFFFF">Servicios de dominio</text>
+    <rect x="482" y="226" width="236" height="54" rx="8" fill="#FFFFFF"/>
+    <text x="600" y="248" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">obtenerPerfilConductor()</text>
+    <text x="600" y="268" text-anchor="middle" font-size="12" font-weight="700" fill="#64748B">unidades + conductores</text>
+    <rect x="482" y="304" width="236" height="54" rx="8" fill="#00B5E2"/>
+    <text x="600" y="326" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">guardarCalificacion()</text>
+    <text x="600" y="346" text-anchor="middle" font-size="12" font-weight="700" fill="#031549">score + dispositivo_id</text>
+    <rect x="482" y="382" width="236" height="54" rx="8" fill="#FFD500"/>
+    <text x="600" y="404" text-anchor="middle" font-size="15" font-weight="900" fill="#031549">obtenerDiasCalificados()</text>
+    <text x="600" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#031549">fecha_hora + días únicos</text>
+
+    <rect x="844" y="150" width="292" height="340" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="872" y="194" font-size="21" font-weight="900" fill="#031549">Supabase</text>
+    <g font-size="14" font-weight="900" fill="#031549">
+      <rect x="872" y="226" width="236" height="36" rx="8" fill="#F4F5F7"/>
+      <text x="990" y="249" text-anchor="middle">unidades</text>
+      <rect x="872" y="276" width="236" height="36" rx="8" fill="#F4F5F7"/>
+      <text x="990" y="299" text-anchor="middle">conductores</text>
+      <rect x="872" y="326" width="236" height="36" rx="8" fill="#F4F5F7"/>
+      <text x="990" y="349" text-anchor="middle">calificaciones</text>
+      <rect x="872" y="376" width="236" height="36" rx="8" fill="#F4F5F7"/>
+      <text x="990" y="399" text-anchor="middle">beneficios_cupones</text>
+      <rect x="872" y="426" width="236" height="36" rx="8" fill="#F4F5F7"/>
+      <text x="990" y="449" text-anchor="middle">estadisticas + RPC</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#00B5E2" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 18">
+    <path d="M372 320 H435"/>
+    <path d="M762 320 H825"/>
+    <animate attributeName="stroke-dashoffset" values="0;-64" dur="2s" repeatCount="indefinite"/>
+  </g>
+
+  <g transform="translate(140 536)" font-family="Inter, Segoe UI, Arial, sans-serif">
+    <rect width="920" height="46" rx="8" fill="#EAF8FC" stroke="#BAE6FD"/>
+    <text x="460" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#031549">RLS, validación de datos y políticas de privacidad sostienen el ciclo de confianza.</text>
+  </g>
+</svg>

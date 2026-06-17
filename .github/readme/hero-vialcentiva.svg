@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">VialCentiva Pasajero</title>
+  <desc id="desc">Hero visual para README de GitHub con ciudad, QR, rutas y pantallas móviles.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="0.48" stop-color="#EAF8FC"/>
+      <stop offset="1" stop-color="#FFF8D6"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#031549" flood-opacity="0.18"/>
+    </filter>
+    <clipPath id="phoneClip">
+      <rect x="802" y="108" width="230" height="430" rx="34"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <rect x="0" y="430" width="1200" height="200" fill="#031549"/>
+  <path d="M0 420 C210 362 378 468 560 414 C790 346 940 378 1200 320 L1200 630 L0 630 Z" fill="#00B5E2"/>
+  <path d="M0 500 C180 440 320 536 520 493 C760 442 920 472 1200 408 L1200 630 L0 630 Z" fill="#FFD500"/>
+  <path d="M0 536 C190 504 344 566 540 530 C774 488 936 506 1200 456 L1200 630 L0 630 Z" fill="#F8FAFC"/>
+
+  <g opacity="0.22" fill="#031549">
+    <rect x="78" y="272" width="58" height="170"/>
+    <rect x="154" y="214" width="44" height="228"/>
+    <rect x="220" y="246" width="72" height="196"/>
+    <rect x="318" y="188" width="50" height="254"/>
+    <rect x="392" y="238" width="62" height="204"/>
+    <rect x="492" y="202" width="42" height="240"/>
+    <rect x="562" y="264" width="78" height="178"/>
+    <rect x="1060" y="250" width="58" height="192"/>
+  </g>
+
+  <g fill="#00B5E2" opacity="0.22">
+    <rect x="95" y="296" width="12" height="12"/>
+    <rect x="116" y="326" width="12" height="12"/>
+    <rect x="168" y="244" width="12" height="12"/>
+    <rect x="240" y="278" width="12" height="12"/>
+    <rect x="340" y="218" width="12" height="12"/>
+    <rect x="414" y="268" width="12" height="12"/>
+    <rect x="508" y="230" width="12" height="12"/>
+    <rect x="585" y="294" width="12" height="12"/>
+  </g>
+
+  <g transform="translate(76 86)">
+    <rect x="0" y="0" width="112" height="112" rx="22" fill="#031549"/>
+    <rect x="18" y="18" width="22" height="22" fill="#FFD500"/>
+    <rect x="72" y="18" width="22" height="22" fill="#FFD500"/>
+    <rect x="18" y="72" width="22" height="22" fill="#FFD500"/>
+    <rect x="51" y="51" width="12" height="12" fill="#00B5E2"/>
+    <rect x="72" y="55" width="22" height="10" fill="#F8FAFC"/>
+    <rect x="55" y="74" width="10" height="20" fill="#F8FAFC"/>
+    <text x="138" y="42" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="800" fill="#031549">QR vivo</text>
+    <text x="138" y="75" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="600" fill="#334155">Cada unidad abre una experiencia verificable.</text>
+  </g>
+
+  <g transform="translate(80 250)">
+    <text x="0" y="0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="76" font-weight="900" fill="#031549">VialCentiva</text>
+    <text x="0" y="72" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="46" font-weight="900" fill="#031549">Pasajero</text>
+    <rect x="0" y="96" width="560" height="58" rx="8" fill="#FFD500"/>
+    <text x="22" y="134" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="25" font-weight="900" fill="#031549">auditoría ciudadana para movilidad local</text>
+    <text x="0" y="204" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#0F172A">QR, reputación, recompensas y datos transparentes.</text>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="790" y="96" width="254" height="454" rx="44" fill="#031549"/>
+    <rect x="802" y="108" width="230" height="430" rx="34" fill="#F8FAFC"/>
+    <g clip-path="url(#phoneClip)">
+      <rect x="802" y="108" width="230" height="170" fill="#00B5E2"/>
+      <rect x="824" y="132" width="126" height="18" rx="8" fill="#031549"/>
+      <circle cx="917" cy="216" r="54" fill="#FFFFFF"/>
+      <circle cx="917" cy="216" r="44" fill="#F4F5F7"/>
+      <text x="917" y="229" font-family="Inter, Segoe UI, Arial, sans-serif" text-anchor="middle" font-size="30" font-weight="900" fill="#031549">VC</text>
+      <rect x="834" y="304" width="166" height="26" rx="8" fill="#FFD500"/>
+      <rect x="834" y="350" width="166" height="18" rx="8" fill="#CBD5E1"/>
+      <rect x="834" y="382" width="126" height="18" rx="8" fill="#CBD5E1"/>
+      <rect x="834" y="432" width="166" height="54" rx="8" fill="#031549"/>
+      <text x="917" y="466" font-family="Inter, Segoe UI, Arial, sans-serif" text-anchor="middle" font-size="18" font-weight="900" fill="#FFFFFF">Calificar viaje</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#031549" stroke-width="9" stroke-linecap="round" stroke-dasharray="1 26" opacity="0.72">
+    <path d="M650 424 C714 356 746 284 806 238">
+      <animate attributeName="stroke-dashoffset" from="0" to="-54" dur="2.2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <g transform="translate(636 398)">
+    <circle cx="0" cy="0" r="26" fill="#FFFFFF"/>
+    <circle cx="0" cy="0" r="16" fill="#00B5E2"/>
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#00B5E2" stroke-width="4" opacity="0.5">
+      <animate attributeName="r" values="28;46;28" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.55;0;0.55" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g transform="translate(1080 100)">
+    <rect x="0" y="0" width="74" height="74" rx="8" fill="#FFFFFF" opacity="0.9"/>
+    <path d="M22 42 L34 54 L55 24" fill="none" stroke="#00B5E2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <animateTransform attributeName="transform" type="translate" values="1080 100;1080 92;1080 100" dur="2.8s" repeatCount="indefinite"/>
+  </g>
+</svg>
